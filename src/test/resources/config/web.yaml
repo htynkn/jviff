@@ -1,0 +1,6 @@
+envHosts:
+  - http://localhost:7777/normal/
+  - http://localhost:7777/diff/
+
+scripts:
+  - "open 1.html record"
