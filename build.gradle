@@ -2,6 +2,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'checkstyle'
 apply plugin: "jacoco"
+apply plugin: 'maven'
 
 sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
@@ -11,7 +12,7 @@ repositories {
 }
 
 version = '0.0.1-SNAPSHOT'
-group = 'com.huangyunkun.jviff'
+group = 'com.huangyunkun'
 
 ext {
     seleniumVersion = '2.45.0'
@@ -98,4 +99,72 @@ check.dependsOn jacocoTestReport
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.3'
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: sonatypeUsername, password: sonatypePassword)
+            }
+
+            pom.project {
+                name project.name
+                packaging 'jar'
+                description 'A test tool to find visual differences between web pages in different environments.'
+                url 'https://github.com/htynkn/jviff'
+
+                scm {
+                    url 'scm:git@github.com:htynkn/jviff.git'
+                    connection 'scm:git@github.com:htynkn/jviff.git'
+                    developerConnection 'git@github.com:htynkn/jviff.git'
+                }
+
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution 'repo'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'htynkn'
+                        name 'Yunkun Huang'
+                    }
+                }
+            }
+        }
+    }
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from 'build/docs/javadoc'
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.huangyunkun.jviff.Runner',
+                'Package': "com.huangyunkun.jviff",
+                'Implementation-Title': "${project.name}",
+                'Implementation-Version': "${version}",
+                'Implementation-Vendor': 'Yunkun Huang',
+                'Built-By': 'Yunkun Huang',
+                'Built-Date': new Date().getDateTimeString(),
+                'Built-With': "gradle-${project.getGradle().getGradleVersion()}, groovy-${GroovySystem.getVersion()}",
+                'Created-By': 'Java ' + System.getProperty('java.version') + ' (' + System.getProperty('java.vendor') + ')'
+    }
+}
+
+artifacts {
+    archives jar
+    archives javadocJar
+    archives sourcesJar
 }
