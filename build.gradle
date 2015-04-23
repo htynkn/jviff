@@ -3,6 +3,7 @@ apply plugin: 'idea'
 apply plugin: 'checkstyle'
 apply plugin: "jacoco"
 apply plugin: 'maven'
+apply plugin: 'signing'
 
 sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
@@ -104,6 +105,8 @@ task wrapper(type: Wrapper) {
 uploadArchives {
     repositories {
         mavenDeployer {
+            beforeDeployment { deployment -> signing.signPom(deployment) }
+
             repository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
                 authentication(userName: sonatypeUsername, password: sonatypePassword)
             }
@@ -137,6 +140,10 @@ uploadArchives {
             }
         }
     }
+}
+
+signing {
+    sign configurations.archives
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
