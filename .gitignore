@@ -36,3 +36,4 @@
 *.sublime-*
 .nb-gradle
 local.properties
+gradle.properties
