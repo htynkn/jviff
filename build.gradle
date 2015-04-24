@@ -12,7 +12,7 @@ repositories {
     jcenter()
 }
 
-version = '0.0.1-SNAPSHOT'
+version = '0.0.2-SNAPSHOT'
 group = 'com.huangyunkun'
 
 ext {
@@ -107,7 +107,11 @@ uploadArchives {
         mavenDeployer {
             beforeDeployment { deployment -> signing.signPom(deployment) }
 
-            repository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: sonatypeUsername, password: sonatypePassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
                 authentication(userName: sonatypeUsername, password: sonatypePassword)
             }
 
@@ -135,6 +139,7 @@ uploadArchives {
                     developer {
                         id 'htynkn'
                         name 'Yunkun Huang'
+                        email 'htynkn@gmail.com'
                     }
                 }
             }
