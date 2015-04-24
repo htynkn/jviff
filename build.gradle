@@ -4,9 +4,20 @@ apply plugin: 'checkstyle'
 apply plugin: "jacoco"
 apply plugin: 'maven'
 apply plugin: 'signing'
+apply plugin: 'com.github.kt3k.coveralls'
 
 sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.3.1'
+    }
+}
 
 repositories {
     jcenter()
