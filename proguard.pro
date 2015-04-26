@@ -47,3 +47,4 @@
 -dontwarn  sun.util.xml.**
 -dontwarn org.apache.http.impl.auth.**
 -dontwarn com.google.common.**
+-dontwarn sun.org.mozilla.javascript.internal.xmlimpl.**
