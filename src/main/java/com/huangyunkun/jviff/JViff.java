@@ -80,12 +80,14 @@ public class JViff {
 
         for (int i = 0; i < stepResults.size(); i++) {
             StepResult stepResult = stepResults.get(i);
-            File one = new File(tempDir, stepResult.getFirstImage());
-            File two = new File(tempDir, stepResult.getSecondImage());
-            comparator.compare(one, two, stepResult);
-            if (!stepResult.getSuccess()) {
-                reporter.report(one, two, tempDir.getAbsolutePath(), stepResult);
-                logger.error("Image is diff. " + stepContainer.getSteps().get(i));
+            if (stepResult.getStep().getRecord()) {
+                File one = new File(tempDir, stepResult.getFirstImage());
+                File two = new File(tempDir, stepResult.getSecondImage());
+                comparator.compare(one, two, stepResult);
+                if (!stepResult.getSuccess()) {
+                    reporter.report(one, two, tempDir.getAbsolutePath(), stepResult);
+                    logger.error("Image is diff. " + stepContainer.getSteps().get(i));
+                }
             }
         }
 

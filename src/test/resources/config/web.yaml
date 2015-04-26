@@ -4,3 +4,6 @@ envHosts:
 
 scripts:
   - "open 1.html record"
+  - "open 2.html"
+  - "select .select-box Option-2"
+  - "select #color-select DarkRed record"
