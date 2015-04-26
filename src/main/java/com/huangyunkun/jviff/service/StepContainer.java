@@ -18,21 +18,16 @@ package com.huangyunkun.jviff.service;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
+import com.huangyunkun.jviff.config.Constant;
 import com.huangyunkun.jviff.modal.Step;
 import com.huangyunkun.jviff.parser.BaseStepParser;
 import com.huangyunkun.jviff.runner.BaseRunner;
 import org.openqa.selenium.WebDriver;
-import org.reflections.Reflections;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.net.URL;
 import java.util.List;
-import java.util.Set;
 
 public class StepContainer {
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
-
     private List<Step> steps = Lists.newArrayList();
     private static ImmutableMap<String, BaseStepParser> parserImmutableMap;
     private static ImmutableList<BaseRunner> baseRunners;
@@ -40,33 +35,7 @@ public class StepContainer {
 
     static {
         assembleParser();
-        ImmutableList.Builder<BaseRunner> builder = ImmutableList.builder();
-        Reflections reflections = new Reflections("com.huangyunkun.jviff.runner");
-        Set<Class<? extends BaseRunner>> list = reflections.getSubTypesOf(BaseRunner.class);
-        for (Class<? extends BaseRunner> runnerClass : list) {
-            try {
-                BaseRunner runner = runnerClass.newInstance();
-                builder.add(runner);
-            } catch (Exception e) {
-                throw new RuntimeException();
-            }
-        }
-        baseRunners = builder.build();
-    }
-
-    private static void assembleParser() {
-        Reflections reflections = new Reflections("com.huangyunkun.jviff.parser");
-        Set<Class<? extends BaseStepParser>> list = reflections.getSubTypesOf(BaseStepParser.class);
-        ImmutableMap.Builder<String, BaseStepParser> builder = ImmutableMap.builder();
-        for (Class<? extends BaseStepParser> parserClass : list) {
-            try {
-                BaseStepParser stepParser = parserClass.newInstance();
-                builder.put(stepParser.getActionKey(), stepParser);
-            } catch (Exception e) {
-                throw new RuntimeException();
-            }
-        }
-        parserImmutableMap = builder.build();
+        assembleRunner();
     }
 
     public Step parse(String scriptLine) {
@@ -103,5 +72,33 @@ public class StepContainer {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+
+    private static void assembleRunner() {
+        ImmutableList.Builder<BaseRunner> builder = ImmutableList.builder();
+        for (Class<? extends BaseRunner> runnerClass : Constant.RUNNER_LIST) {
+            try {
+                BaseRunner runner = runnerClass.newInstance();
+                builder.add(runner);
+            } catch (Exception e) {
+                throw new RuntimeException();
+            }
+        }
+        baseRunners = builder.build();
+    }
+
+    private static void assembleParser() {
+        ImmutableMap.Builder<String, BaseStepParser> builder = ImmutableMap.builder();
+        for (Class<? extends BaseStepParser> parserClass : Constant.STEP_PARSER_LIST) {
+            try {
+                BaseStepParser stepParser = parserClass.newInstance();
+                builder.put(stepParser.getActionKey(), stepParser);
+            } catch (Exception e) {
+                throw new RuntimeException();
+            }
+        }
+        parserImmutableMap = builder.build();
     }
 }
