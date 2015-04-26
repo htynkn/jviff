@@ -15,12 +15,18 @@
  */
 package com.huangyunkun.jviff;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.huangyunkun.jviff.modal.Step;
 import com.huangyunkun.jviff.modal.StepAction;
+import com.huangyunkun.jviff.parser.BaseStepParser;
+import com.huangyunkun.jviff.runner.BaseRunner;
 import com.huangyunkun.jviff.service.StepContainer;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+
+import java.lang.reflect.Field;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
@@ -32,6 +38,24 @@ public class StepContainerTest {
     @Before
     public void setUp() throws Exception {
         stepContainer = new StepContainer();
+    }
+
+    @Test
+    public void shouldGetMapReady() throws Exception {
+        Field immutableMapField = stepContainer.getClass().getDeclaredField("parserImmutableMap");
+        immutableMapField.setAccessible(true);
+        ImmutableMap<String, BaseStepParser> map = (ImmutableMap<String, BaseStepParser>) immutableMapField.get(stepContainer);
+
+        assertThat(map.size(), is(6));
+    }
+
+    @Test
+    public void shouldGetRunnerListReady() throws Exception {
+        Field baseRunnersField = stepContainer.getClass().getDeclaredField("baseRunners");
+        baseRunnersField.setAccessible(true);
+        ImmutableList<BaseRunner> baseRunner = (ImmutableList<BaseRunner>) baseRunnersField.get(stepContainer);
+
+        assertThat(baseRunner.size(), is(6));
     }
 
     @Test
