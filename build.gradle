@@ -160,8 +160,9 @@ uploadArchives {
     }
 }
 
+ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 signing {
-    required { gradle.taskGraph.hasTask("uploadArchives") }
+    required { isReleaseVersion && gradle.taskGraph.hasTask("uploadArchives") }
     sign configurations.archives
 }
 
@@ -228,4 +229,9 @@ def javaLibPath(lib, osxLib) {
         }
     }
     javaBase + target
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs << "-Xlint:unchecked"
+    options.compilerArgs << "-Xlint:deprecation"
 }
