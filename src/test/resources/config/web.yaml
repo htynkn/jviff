@@ -7,3 +7,5 @@ scripts:
   - "open 2.html"
   - "select .select-box Option-2"
   - "select #color-select DarkRed record"
+  - "click @a record"
+  - "click #text-button record"
