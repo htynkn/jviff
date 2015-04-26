@@ -41,4 +41,9 @@ public class StepBuilder {
         step.setContent(content);
         return this;
     }
+
+    public StepBuilder withTarget(By by) {
+        step.setTarget(by);
+        return this;
+    }
 }
