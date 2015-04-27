@@ -11,6 +11,7 @@
 
 -keep public class com.huangyunkun.jviff.**{*;}
 -keep public class com.google.common.io.Resources{*;}
+-keep public class org.slf4j.Logger{*;}
 -keep public class org.openqa.selenium.**{*;}
 -keep public class org.apache.xerces.**{*;}
 -keep public class org.apache.xpath.**{*;}
