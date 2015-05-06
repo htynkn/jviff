@@ -40,7 +40,9 @@ public class StepContainer {
 
     public Step parse(String scriptLine) {
         String[] split = scriptLine.split(" ");
-        return parserImmutableMap.get(split[0]).parse(scriptLine);
+        Step step = parserImmutableMap.get(split[0]).parse(scriptLine);
+        step.setOriginScript(scriptLine);
+        return step;
     }
 
     public void add(String scriptLine) {
@@ -73,7 +75,6 @@ public class StepContainer {
             e.printStackTrace();
         }
     }
-
 
 
     private static void assembleRunner() {

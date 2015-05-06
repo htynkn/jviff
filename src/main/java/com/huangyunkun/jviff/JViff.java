@@ -20,6 +20,8 @@ import com.google.common.io.Files;
 import com.huangyunkun.jviff.config.Config;
 import com.huangyunkun.jviff.config.ConfigManager;
 import com.huangyunkun.jviff.core.Comparator;
+import com.huangyunkun.jviff.core.ResultReporter;
+import com.huangyunkun.jviff.core.impl.HtmlResultReport;
 import com.huangyunkun.jviff.core.impl.OverlapDiffGenerator;
 import com.huangyunkun.jviff.core.impl.PixelComparator;
 import com.huangyunkun.jviff.modal.Step;
@@ -41,10 +43,11 @@ public class JViff {
 
     private final String filePath;
     private Comparator comparator;
-    private File tempDir;
+    private File outputDir;
     private StepContainer stepContainer;
     private WebDriver driver;
-    private OverlapDiffGenerator reporter;
+    private OverlapDiffGenerator diffGenerator;
+    private ResultReporter resultReporter;
 
     public JViff(String filePath) {
         this.filePath = filePath;
@@ -71,7 +74,7 @@ public class JViff {
                     File screenShot = takesScreenshot.getScreenshotAs(OutputType.FILE);
                     String fileName = String.format("%d-%d.png", hostId, stepId);
                     stepResults.get(i).addImage(fileName);
-                    Files.copy(screenShot, new File(tempDir, fileName));
+                    Files.copy(screenShot, new File(outputDir, fileName));
                     stepId++;
                 }
             }
@@ -81,16 +84,17 @@ public class JViff {
         for (int i = 0; i < stepResults.size(); i++) {
             StepResult stepResult = stepResults.get(i);
             if (stepResult.getStep().getRecord()) {
-                File one = new File(tempDir, stepResult.getFirstImage());
-                File two = new File(tempDir, stepResult.getSecondImage());
+                File one = new File(outputDir, stepResult.getFirstImage());
+                File two = new File(outputDir, stepResult.getSecondImage());
                 comparator.compare(one, two, stepResult);
                 if (!stepResult.getSuccess()) {
-                    reporter.report(one, two, tempDir.getAbsolutePath(), stepResult);
+                    diffGenerator.report(one, two, outputDir.getAbsolutePath(), stepResult);
                     logger.error("Image is diff. " + stepContainer.getSteps().get(i));
                 }
             }
         }
 
+        resultReporter.report(stepResults, outputDir);
         driver.quit();
     }
 
@@ -103,10 +107,12 @@ public class JViff {
 
     private Config prepareEnv() throws IOException {
         comparator = new PixelComparator();
-        reporter = new OverlapDiffGenerator();
+        diffGenerator = new OverlapDiffGenerator();
+        resultReporter = new HtmlResultReport();
         Config config = ConfigManager.getConfigFromFile(filePath);
-        tempDir = new File(config.getOutputDir());
-        logger.info("Folder path: " + tempDir.getAbsolutePath());
+        outputDir = new File(config.getOutputDir());
+        logger.info("Folder path: " + outputDir.getAbsolutePath());
+        System.setProperty("JVIFF_OUTPUT", outputDir.getAbsolutePath());
         stepContainer = new StepContainer();
         stepContainer.add(config.getScripts());
         return config;

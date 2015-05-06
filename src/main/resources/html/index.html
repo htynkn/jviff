@@ -1,0 +1,56 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8"></meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+    <title>JViff report</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"/>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"/>
+</head>
+
+<body>
+<div class="container">
+    <div class="jumbotron">
+        <h3>Please refer to the following report</h3>
+    </div>
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true"
+         th:each="stepResult,iterStat : ${stepResults}">
+        <div class="panel panel-danger" th:class="${stepResult.success}? 'panel panel-success':'panel panel-danger'">
+            <div class="panel-heading" role="tab">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" th:href="'#a'+${iterStat.index}"
+                       th:text="${stepResult.step.originScript}">
+                        open 1.html record
+                    </a>
+                </h4>
+            </div>
+            <div th:id="'a'+${iterStat.index}" class="panel-collapse collapse">
+                <div class="panel-body" th:if="${stepResult.step.record}">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <a href="#" class="thumbnail">
+                                <img src="http://placehold.it/350x150" alt="..."
+                                     th:src="${stepResult.firstImage}"></img>
+                            </a>
+                            <a href="#" class="thumbnail">
+                                <img src="http://placehold.it/350x150" alt="..."
+                                     th:src="${stepResult.secondImage}"></img>
+                            </a>
+                        </div>
+                        <div class="col-md-8">
+                            <a href="#" class="thumbnail"
+                               th:if="${!stepResult.success}">
+                                <img src="http://placehold.it/600x600" alt="..." th:src="${stepResult.diffImage}"></img>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.container -->
+
+</body>
+</html>

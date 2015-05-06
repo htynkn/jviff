@@ -40,6 +40,7 @@ ext {
     hamcrestVersion = '1.3'
     javacvVersion = '0.11'
     reflectionVersion = '0.9.9'
+    thymeleafVersion = '2.1.4.RELEASE'
 }
 
 dependencies {
@@ -48,6 +49,7 @@ dependencies {
             "com.google.guava:guava:$guavaVersion",
             "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion",
             "org.slf4j:slf4j-simple:$slf4jVersion",
+            "org.thymeleaf:thymeleaf:$thymeleafVersion",
             "commons-cli:commons-cli:$cliVersion"
     )
     compile("org.seleniumhq.selenium:selenium-java:$seleniumVersion") {

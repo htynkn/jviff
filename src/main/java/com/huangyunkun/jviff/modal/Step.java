@@ -23,6 +23,7 @@ public class Step {
     private StepAction action;
     private String content;
     private Boolean record = false;
+    private String originScript;
 
     public By getTarget() {
         return target;
@@ -64,5 +65,13 @@ public class Step {
                 .add("Target", this.getTarget())
                 .add("Content", this.getContent())
                 .toString();
+    }
+
+    public void setOriginScript(String originScript) {
+        this.originScript = originScript;
+    }
+
+    public String getOriginScript() {
+        return originScript;
     }
 }

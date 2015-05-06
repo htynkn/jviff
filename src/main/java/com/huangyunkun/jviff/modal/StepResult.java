@@ -26,7 +26,7 @@ public class StepResult {
         this.step = step;
     }
 
-    private Boolean success;
+    private Boolean success = true;
     private String diffImage;
 
     public Step getStep() {

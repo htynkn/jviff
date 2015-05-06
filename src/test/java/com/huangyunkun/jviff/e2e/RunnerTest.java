@@ -21,6 +21,11 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.junit.Test;
 
+import java.io.File;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 public class RunnerTest {
     @Test
     public void shouldInvokeRunner() throws Exception {
@@ -38,5 +43,9 @@ public class RunnerTest {
         Runner.main(new String[]{"-c", configPath});
 
         server.stop();
+        String output = System.getProperty("JVIFF_OUTPUT");
+        File outputHtml = new File(output, "index.html");
+
+        assertThat(outputHtml.exists(), is(true));
     }
 }
