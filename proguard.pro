@@ -16,6 +16,8 @@
 -keep public class org.apache.xerces.**{*;}
 -keep public class org.apache.xpath.**{*;}
 -keep public class org.apache.commons.logging.impl.**{*;}
+-keep public class org.thymeleaf.standard.**{*;}
+-keep public class org.thymeleaf.processor.attr.**{*;}
 
 -keepclassmembers,allowoptimization enum * {
     public static **[] values();
@@ -48,4 +50,5 @@
 -dontwarn  sun.util.xml.**
 -dontwarn org.apache.http.impl.auth.**
 -dontwarn com.google.common.**
+-dontwarn org.thymeleaf.**
 -dontwarn sun.org.mozilla.javascript.internal.xmlimpl.**
