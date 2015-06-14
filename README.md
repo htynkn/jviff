@@ -24,14 +24,11 @@ scripts:
 outputDir: C:\Users\user\AppData\Local\Temp\jviff
 ```
 
-* then build a uberjar by yourself
-```
-./gradlew uberjar
-```
+* download jviff standalone runner[http://repo1.maven.org/maven2/com/huangyunkun/jviff/0.0.2/jviff-0.0.2-standalone.jar](http://repo1.maven.org/maven2/com/huangyunkun/jviff/0.0.2/jviff-0.0.2-standalone.jar)
 
 * run it
 ```
-java -jar jviff-0.0.1-SNAPSHOT-uber.jar -c config.yaml
+java -jar jviff-0.0.2-standalone.jar -c config.yaml
 ```
 
 * check the result in your output dir
