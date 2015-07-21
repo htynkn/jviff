@@ -25,11 +25,11 @@ scripts:
 outputDir: C:\Users\user\AppData\Local\Temp\jviff
 ```
 
-* download jviff standalone runner[http://repo1.maven.org/maven2/com/huangyunkun/jviff/0.0.2/jviff-0.0.2-standalone.jar](http://repo1.maven.org/maven2/com/huangyunkun/jviff/0.0.2/jviff-0.0.2-standalone.jar)
+* download jviff standalone runner 
+[Download](http://repo1.maven.org/maven2/com/huangyunkun/jviff/0.0.2/jviff-0.0.2-standalone.jar).
 
 * run it
 ```
 java -jar jviff-0.0.2-standalone.jar -c config.yaml
 ```
-
 * check the result in your output dir

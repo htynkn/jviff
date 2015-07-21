@@ -16,6 +16,7 @@
 package com.huangyunkun.jviff.service;
 
 import com.google.common.collect.Lists;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
@@ -44,6 +45,8 @@ public class WebDriverManager {
         FirefoxProfile firefoxProfile = new FirefoxProfile();
         firefoxProfile.setPreference("app.update.auto", false);
         firefoxProfile.setPreference("app.update.enabled", false);
+        //TODO:Disable proxy first, will add a proxy setting option later
+        firefoxProfile.setPreference("network.proxy.type", 0);
         WebDriver driver = new FirefoxDriver(firefoxProfile);
         return driver;
     }
@@ -76,7 +79,7 @@ public class WebDriverManager {
     }
 
     public static void setFirefoxPath(String firefoxPath) {
-        if (firefoxPath != null) {
+        if (!StringUtils.isEmpty(firefoxPath)) {
             System.setProperty("webdriver.firefox.bin", firefoxPath);
         }
     }
