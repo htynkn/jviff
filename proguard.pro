@@ -18,6 +18,12 @@
 -keep public class org.apache.commons.logging.impl.**{*;}
 -keep public class org.thymeleaf.standard.**{*;}
 -keep public class org.thymeleaf.processor.attr.**{*;}
+-keep class com.sun.jna.** {*;}
+
+-keepclassmembers class * extends com.sun.jna.** {
+    <fields>;
+    <methods>;
+}
 
 -keepclassmembers,allowoptimization enum * {
     public static **[] values();
@@ -52,3 +58,4 @@
 -dontwarn com.google.common.**
 -dontwarn org.thymeleaf.**
 -dontwarn sun.org.mozilla.javascript.internal.xmlimpl.**
+-dontwarn  org.eclipse.jetty.**
