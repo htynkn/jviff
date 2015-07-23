@@ -12,11 +12,13 @@
 -keep public class com.huangyunkun.jviff.**{*;}
 -keep public class com.google.common.io.Resources{*;}
 -keep public class org.slf4j.Logger{*;}
--keep public class org.openqa.selenium.**{*;}
--keep public class org.apache.xerces.**{*;}
--keep public class org.apache.xpath.**{*;}
+-keep public class org.apache.xerces.parsers.*{*;}
+-keep public class org.apache.xerces.impl.**{*;}
+-keep public class org.apache.xerces.jaxp.**{*;}
+-keep public class org.openqa.selenium.By{*;}
+-keep public class org.apache.xpath.jaxp.XPathFactoryImpl{*;}
 -keep public class org.apache.commons.logging.impl.**{*;}
--keep public class org.thymeleaf.standard.**{*;}
+-keep public class org.thymeleaf.standard.expression.**{*;}
 -keep public class org.thymeleaf.processor.attr.**{*;}
 -keep class com.sun.jna.** {*;}
 
