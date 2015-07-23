@@ -1,4 +1,5 @@
 import org.gradle.internal.os.OperatingSystem
+import java.text.DecimalFormat
 
 apply plugin: 'java'
 apply plugin: 'idea'
@@ -190,11 +191,21 @@ task proguard(type: proguard.gradle.ProGuardTask, dependsOn: uberjar) {
     configuration file("$rootDir/proguard.pro")
 }
 
-task proguardCheck(type: Test, dependsOn: proguard) {
+task proguardTest(type: Test, dependsOn: proguard) {
     testLogging { exceptionFormat "full" }
     classpath = classpath - files(sourceSets.main.output.classesDir) - files(configurations.runtime) +
             files(proguard.outputs.files.singleFile)
 }
+
+task proguardCheck << {
+    File f1 = file(uberjar.archivePath);
+    File f2 = file(proguard.outputs.files.singleFile);
+    DecimalFormat df = new DecimalFormat();
+    df.setMaximumFractionDigits(2);
+    df.setMinimumFractionDigits(2);
+    println('Compress: ' + df.format(f2.length()*100.00/f1.length())+"%");
+}
+proguardCheck.dependsOn proguardTest
 uploadArchives.dependsOn proguardCheck
 
 artifacts {
