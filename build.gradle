@@ -1,4 +1,5 @@
 import org.gradle.internal.os.OperatingSystem
+
 import java.text.DecimalFormat
 
 apply plugin: 'java'
@@ -8,6 +9,7 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 apply plugin: 'cobertura'
 apply plugin: 'com.github.kt3k.coveralls'
+apply plugin: 'de.undercouch.download'
 
 sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
@@ -21,6 +23,7 @@ buildscript {
         classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.4.0'
         classpath 'net.saliman:gradle-cobertura-plugin:2.2.8'
         classpath "net.sf.proguard:proguard-gradle:5.2.1"
+        classpath 'de.undercouch:gradle-download-task:1.2'
     }
 }
 
@@ -203,7 +206,7 @@ task proguardCheck << {
     DecimalFormat df = new DecimalFormat();
     df.setMaximumFractionDigits(2);
     df.setMinimumFractionDigits(2);
-    println('Compress: ' + df.format(f2.length()*100.00/f1.length())+"%");
+    println('Compress: ' + df.format(f2.length() * 100.00 / f1.length()) + "%");
 }
 proguardCheck.dependsOn proguardTest
 uploadArchives.dependsOn proguardCheck
@@ -238,3 +241,29 @@ tasks.withType(JavaCompile) {
     options.compilerArgs << "-Xlint:unchecked"
     options.compilerArgs << "-Xlint:deprecation"
 }
+
+task downloadFrontDependencies() {
+    new File("${buildDir}/tmp/front").mkdirs();
+    download {
+        src([
+                'https://code.jquery.com/jquery-2.1.4.min.js',
+                'http://d.bootcss.com/bootstrap-3.3.5-dist.zip'
+        ])
+        dest "${buildDir}/tmp/front"
+    }
+}
+
+task dealFrontDependencies(dependsOn: downloadFrontDependencies) {
+    copy {
+        from zipTree(new File("${buildDir}/tmp/front/bootstrap-3.3.5-dist.zip"))
+        into 'src/main/resources/static'
+    }
+    copy {
+        from "${buildDir}/tmp/front/jquery-2.1.4.min.js"
+        into "src/main/resources/static"
+        rename 'jquery-(.*).js', 'jquery.js'
+    }
+    ant.move(file: "src/main/resources/static/bootstrap-3.3.5-dist", tofile: "src/main/resources/static/bootstrap")
+}
+
+uploadArchives.dependsOn dealFrontDependencies

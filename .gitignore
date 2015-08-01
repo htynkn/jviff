@@ -37,3 +37,4 @@
 .nb-gradle
 local.properties
 gradle.properties
+src/main/resources/static
