@@ -2,6 +2,7 @@
 
 -dontobfuscate
 -dontoptimize
+-dontshrink
 
 -keepattributes *Annotation*,EnclosingMethod
 
