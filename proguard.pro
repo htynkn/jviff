@@ -15,7 +15,7 @@
 -keep public class org.apache.xerces.parsers.*{*;}
 -keep public class org.apache.xerces.impl.**{*;}
 -keep public class org.apache.xerces.jaxp.**{*;}
--keep class org.openqa.selenium.**{*;}
+-keep public class org.openqa.selenium.By{*;}
 -keep public class org.apache.xpath.jaxp.XPathFactoryImpl{*;}
 -keep public class org.apache.commons.logging.impl.**{*;}
 -keep public class org.thymeleaf.standard.expression.**{*;}
