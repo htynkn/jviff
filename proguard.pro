@@ -2,7 +2,6 @@
 
 -dontobfuscate
 -dontoptimize
--dontshrink
 
 -keepattributes *Annotation*,EnclosingMethod
 
@@ -16,8 +15,7 @@
 -keep public class org.apache.xerces.parsers.*{*;}
 -keep public class org.apache.xerces.impl.**{*;}
 -keep public class org.apache.xerces.jaxp.**{*;}
--keep public class org.openqa.selenium.By{*;}
--keep public class org.openqa.selenium.**{*;}
+-keep class org.openqa.selenium.**{*;}
 -keep public class org.apache.xpath.jaxp.XPathFactoryImpl{*;}
 -keep public class org.apache.commons.logging.impl.**{*;}
 -keep public class org.thymeleaf.standard.expression.**{*;}
@@ -62,4 +60,4 @@
 -dontwarn com.google.common.**
 -dontwarn org.thymeleaf.**
 -dontwarn sun.org.mozilla.javascript.internal.xmlimpl.**
--dontwarn  org.eclipse.jetty.**
+-dontwarn org.eclipse.jetty.**
