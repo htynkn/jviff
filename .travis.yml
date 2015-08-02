@@ -3,9 +3,12 @@ jdk:
   - oraclejdk8
   - oraclejdk7
   - openjdk7
+os:
+  - linux
+  - osx
 before_install:
   - chmod +x gradlew
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
 script:
-  - ./gradlew clean test proguardCheck
+  - ./gradlew clean proguardCheck
