@@ -11,7 +11,7 @@ before_install:
   - "rvm install 2.1.1"
   - "rvm install 2.1.1-dev"
   - "rvm use 2.1.1"
-  - "sudo gem install chef"
+  - "gem install chef"
   - "sudo mkdir /var/chef/cookbooks/"
   - "knife cookbook site download firefox"
   - "sudo tar xvfz firefox-*.tar.gz -C /var/chef/cookbooks/"
