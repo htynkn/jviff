@@ -245,7 +245,7 @@ tasks.withType(JavaCompile) {
     options.compilerArgs << "-Xlint:deprecation"
 }
 
-task downloadFrontDependencies() {
+task downloadFrontDependencies << {
     new File("${buildDir}/tmp/front").mkdirs();
     FileUtils.copyURLToFile(new URL('https://code.jquery.com/jquery-2.1.4.min.js'),
             new File("${buildDir}/tmp/front/jquery.js"))
@@ -253,7 +253,7 @@ task downloadFrontDependencies() {
             new File("${buildDir}/tmp/front/bootstrap.zip"))
 }
 
-task dealFrontDependencies(dependsOn: downloadFrontDependencies) {
+task dealFrontDependencies << {
     delete 'src/main/resources/static'
     copy {
         from zipTree(new File("${buildDir}/tmp/front/bootstrap.zip"))
@@ -265,3 +265,5 @@ task dealFrontDependencies(dependsOn: downloadFrontDependencies) {
     }
     ant.move(file: "src/main/resources/static/bootstrap-3.3.5-dist", tofile: "src/main/resources/static/bootstrap")
 }
+
+dealFrontDependencies.dependsOn downloadFrontDependencies
