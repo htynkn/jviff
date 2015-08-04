@@ -15,10 +15,9 @@
  */
 package com.huangyunkun.jviff.service;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.contrib.java.lang.system.ClearSystemProperties;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -28,19 +27,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * WebSite: http://www.huangyunkun.com
  * Email: htynkn@163.com
  */
-@Ignore
 public class WebDriverManagerTest {
+    @Rule
+    public final ClearSystemProperties clearedProperty = new ClearSystemProperties(WEBDRIVER_FIREFOX_BIN);
+
     public static final String WEBDRIVER_FIREFOX_BIN = "webdriver.firefox.bin";
-
-    @Before
-    public void setUp() throws Exception {
-        System.setProperty(WEBDRIVER_FIREFOX_BIN, "");
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        System.setProperty(WEBDRIVER_FIREFOX_BIN, "");
-    }
 
     @Test
     public void shouldSetFirefoxBinPathIfNotEmpty() throws Exception {
