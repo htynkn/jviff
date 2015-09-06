@@ -52,7 +52,8 @@ public class HtmlResultReportTest {
         resultReport.report(stepResults, tempDir.getAbsoluteFile());
 
         File outputHtml = new File(tempDir, "index.html");
-
+        File staticFolder = new File(tempDir, "static");
         assertThat(outputHtml.exists(), is(true));
+        assertThat(staticFolder.isDirectory(), is(true));
     }
 }

@@ -44,8 +44,12 @@ public class RunnerTest {
 
         server.stop();
         String output = System.getProperty("JVIFF_OUTPUT");
+
         File outputHtml = new File(output, "index.html");
+        File staticFolder = new File(output, "static");
 
         assertThat(outputHtml.exists(), is(true));
+        assertThat(staticFolder.exists(), is(true));
+        assertThat(staticFolder.isDirectory(), is(true));
     }
 }

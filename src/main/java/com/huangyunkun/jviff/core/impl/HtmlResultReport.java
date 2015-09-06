@@ -21,6 +21,7 @@ import com.google.common.io.Files;
 import com.google.common.io.Resources;
 import com.huangyunkun.jviff.core.ResultReporter;
 import com.huangyunkun.jviff.modal.StepResult;
+import org.apache.commons.io.FileUtils;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.templateresolver.FileTemplateResolver;
@@ -60,5 +61,11 @@ public class HtmlResultReport implements ResultReporter {
         String html = templateEngine.process(templateFile, ctx);
         File outputFile = new File(outputDir, "index.html");
         Files.write(html, outputFile, Charset.forName("utf8"));
+        copyResources(outputDir);
+    }
+
+    private void copyResources(File outputDir) throws IOException {
+        String frontFolder = Resources.getResource("static").getFile();
+        FileUtils.copyDirectory(new File(frontFolder), new File(outputDir, "static"));
     }
 }
