@@ -26,10 +26,10 @@ outputDir: C:\Users\user\AppData\Local\Temp\jviff
 ```
 
 * download jviff standalone runner 
-[Download](http://repo1.maven.org/maven2/com/huangyunkun/jviff/0.0.2/jviff-0.0.2-standalone.jar).
+[Download](http://repo1.maven.org/maven2/com/huangyunkun/jviff/0.0.3/jviff-0.0.3-standalone.jar).
 
-* run it
+* run
 ```
 java -jar jviff-0.0.2-standalone.jar -c config.yaml
 ```
-* check the result in your output dir
+* you will have a html report in your output dir
